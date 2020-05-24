@@ -29,8 +29,9 @@ naming <- "media_news/news-%s.csv" %--% list(c(1:21))
 
 media_news <- data.frame()
 for (i in 1:length(naming)) {
-  data <- read.csv(naming[i], header = TRUE, na.strings = "")
+  data <- read.csv(naming[i], header = TRUE, na.strings = "", stringsAsFactors = FALSE)
   data$Период <- as.character(dates[i])
   media_news <- rbind(media_news, data)
 }
+
 
