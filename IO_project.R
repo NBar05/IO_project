@@ -34,7 +34,6 @@ for (i in 1:length(naming)) {
   media_news <- rbind(media_news, data)
 }
 
-
 # не будем искать врагов там, где их нет
 media_news_c <- media_news %>%
   filter(Тематики.ресурса !=
@@ -46,4 +45,20 @@ media_news_c <- media_news %>%
 
 # оставим только газеты и журналы
 media_only_news <- media_news %>% filter(Тематики.ресурса == "Новости и СМИ, Новости и СМИ->Газеты, журналы")
+
+
+# 
+media_holdings <- media_holdings %>% mutate(year = as.integer(format(as.Date(Период), "%Y")), 
+                                            month = as.integer(format(as.Date(Период), "%m")))
+
+names(media_holdings)[1:6] <- c("name", "cross_device_visitors", "users", "daily_audience", "average_time", "date")
+
+summary_holdings <- media_holdings %>% group_by(name, year) %>% summarise(yearly_audience = sum(cross_device_visitors),
+                                                                          counts = n()) %>% filter(year == 2019)
+
+summary_holdings$gov <- c(1, 0, 1, 1, 0, 0, 1, NA, 1, NA, 0, 0, 1, 1, 0, 0, 0, 0, 0, NA, 1)
+
+summary_holdings <- summary_holdings %>% arrange(gov, desc(yearly_audience))
+
+stargazer(summary_holdings, type = "latex", summary = FALSE)
 
