@@ -50,5 +50,12 @@ summary_media_news <- media_news %>% mutate(year = as.integer(format(as.Date(dat
 # объединяем доли по холдигнам, если они есть
 summary_holdings_and_sites <- summary_media_news %>% group_by(holding_or_site) %>% summarise(share = sum(share))
 
+table_1 <- summary_holdings_and_sites %>% mutate(share = round(share*100, digits = 4)) %>% arrange(desc(share)) %>%
+  select("Холдинг / Сайт" = holding_or_site, "Доля рынка" = share) %>% head(20)
+
+stargazer(table_1, summary = FALSE, type = "latex")
+
 # индекс Герфиндаля
 H_1 <- summary_holdings_and_sites %>% mutate(share_2 = share^2) %>% summarise(H = sum(share_2)*10000)
+
+# 
