@@ -89,7 +89,7 @@ table_2 <- a_2 %>% arrange(desc(share)) %>% head(20)
 
 H_2 <- table_2 %>% mutate(share_2 = share^2) %>% summarise(H = sum(share_2))
 
-table_2 %>% mutate(share = round(share, digits = 4)) %>% data.frame() %>%
+table_2 %>% mutate(share = round(share, digits = 3)) %>% data.frame() %>%
   select("Источники информации" = fed_or_ind, "Доля посещений" = share) %>% stargazer(summary = FALSE, type = "latex")
 
 n_2 <- table_2 %>% filter(share > 1) %>% summarise(n = n())
@@ -102,7 +102,7 @@ table_3 <- a_3 %>% arrange(desc(share)) %>% head(20)
 
 H_3 <- table_3 %>% mutate(share_2 = share^2) %>% summarise(H = sum(share_2))
 
-table_3 %>% mutate(share = round(share, digits = 4)) %>% data.frame() %>%
+table_3 %>% mutate(share = round(share, digits = 3)) %>% data.frame() %>%
   select("Источники информации" = gov_or_ind, "Доля посещений" = share) %>% stargazer(summary = FALSE, type = "latex")
 
 n_3 <- table_3 %>% filter(share > 1) %>% summarise(n = n())
